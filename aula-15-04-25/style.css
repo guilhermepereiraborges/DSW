@@ -1,0 +1,40 @@
+body {
+    font-family: "Comic Sans MS", "Comic Sans", cursive;
+}
+
+h1 {
+    background-color: #FF0000;
+}
+
+h2 {
+    background-color: #001eff;
+}
+
+h3 {
+    background-color: #989898;
+}
+
+h1, h2, h3 {
+    text-align: center;
+    font-size: 40px;
+}
+
+img {
+    display: block;
+    align-items: center;
+    margin: 0 auto;
+}
+
+p {
+    padding-left: 50px;
+}
+
+table, tr, th, td {
+    border: 1px solid black;
+    margin: 0 auto;
+}
+
+tr, th, td {
+    text-align: center;
+    padding: 5px 10px;
+}
