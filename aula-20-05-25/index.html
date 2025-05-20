@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>História da Internet</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    /* Reset de box-sizing */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    /* Variáveis de cor para facilitar modo escuro e claro */
+    :root {
+      --primary: #274472;
+      --secondary: #A3CEF1;
+      --accent: #F2A154;
+      --background: #f9f9f9;
+      --text: #222;
+      --header-bg: var(--primary);
+      --header-text: #fff;
+      --nav-bg: var(--primary);
+      --nav-text: #fff;
+      --nav-hover-bg: var(--accent);
+      --nav-hover-text: #222;
+      --aside-bg: #e7eff6;
+      --main-bg: #fff;
+      --footer-bg: var(--secondary);
+      --footer-text: #222;
+    }
+
+    /* Modo escuro */
+    body.dark-mode {
+      --background: #1a1d20;
+      --text: #f4f6f8;
+      --header-bg: #1e3048;
+      --header-text: #F2A154;
+      --nav-bg: #1e3048;
+      --nav-text: #F2A154;
+      --nav-hover-bg: #274472;
+      --nav-hover-text: #F2A154;
+      --aside-bg: #232b36;
+      --main-bg: #22272e;
+      --footer-bg: #232b36;
+      --footer-text: #F2A154;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--background);
+      color: var(--text);
+    }
+
+    /* Cabeçalho */
+    header {
+      padding: 60px 0 30px 0;
+      text-align: center;
+      background: var(--header-bg);
+      color: var(--header-text);
+      transition: background 0.3s, color 0.3s;
+    }
+
+    header h1 {
+      margin-top: 0;
+      margin-bottom: 10px;
+      font-size: 2.7rem;
+    }
+    header p {
+      margin: 0;
+      font-size: 1.2rem;
+    }
+
+    /* Navbar Sticky */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: var(--nav-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s, color 0.3s;
+      box-shadow: 0 2px 10px 0 rgba(30,48,72,0.07);
+    }
+
+    nav ul {
+      display: flex;
+      gap: 10px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav a {
+      display: block;
+      color: var(--nav-text);
+      text-decoration: none;
+      padding: 16px 22px;
+      font-size: 1.1rem;
+      border-radius: 5px;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    nav a:hover, nav a:focus {
+      background: var(--nav-hover-bg);
+      color: var(--nav-hover-text);
+    }
+
+    /* Botão modo escuro */
+    .dark-toggle {
+      margin-left: auto;
+      background: none;
+      border: none;
+      padding: 15px 20px;
+      color: var(--nav-text);
+      cursor: pointer;
+      font-size: 1.3rem;
+      transition: color 0.3s;
+    }
+
+    /* Layout principal com aside e main */
+    main {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 32px;
+      margin: 32px auto;
+      max-width: 1200px;
+      padding: 0 16px;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    aside {
+      flex: 1 1 280px;
+      background: var(--aside-bg);
+      padding: 22px;
+      border-radius: 10px;
+      min-width: 260px;
+      max-width: 340px;
+      margin-bottom: 32px;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    section {
+      flex: 3 1 500px;
+      background: var(--main-bg);
+      padding: 26px;
+      border-radius: 10px;
+      min-width: 0;
+      box-shadow: 0 2px 6px 0 rgba(39,68,114,0.05);
+      transition: background 0.3s, color 0.3s;
+    }
+
+    /* Imagens falsas estilizadas */
+    .fakeimg {
+      background: linear-gradient(120deg, var(--secondary) 40%, var(--accent) 100%);
+      width: 100%;
+      height: 180px;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+
+    /* Rodapé */
+    footer {
+      padding: 24px;
+      text-align: center;
+      background: var(--footer-bg);
+      color: var(--footer-text);
+      border-top: 1px solid #ccc;
+      margin-top: 40px;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    /* Responsivo: colunas em stack no mobile */
+    @media (max-width: 900px) {
+      main {
+        flex-direction: column;
+        gap: 0;
+      }
+      aside {
+        max-width: 100%;
+        margin-bottom: 20px;
+      }
+      section {
+        min-width: 0;
+      }
+    }
+
+    /* Responsivo: Menu sanduíche */
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 2rem;
+      margin-right: 16px;
+      color: var(--nav-text);
+      cursor: pointer;
+    }
+
+    @media (max-width: 700px) {
+      nav ul {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        background: var(--nav-bg);
+        position: absolute;
+        top: 58px;
+        left: 0;
+      }
+      nav ul.open {
+        display: flex;
+      }
+      .menu-toggle {
+        display: block;
+      }
+      nav {
+        flex-wrap: wrap;
+        position: sticky;
+      }
+      .dark-toggle {
+        margin-left: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Aviso de responsividade -->
+  <aside style="background:var(--accent);padding:5px;text-align:center;color:#222;font-weight:bold;">
+    Redimensione a janela para ver o efeito responsivo! 
+  </aside>
+
+  <!-- Cabeçalho semântico -->
+  <header>
+    <h1>História da Internet</h1>
+    <p>De Arpanet à era digital global</p>
+  </header>
+
+  <!-- Navbar sticky com menu sanduíche e modo escuro -->
+  <nav aria-label="Menu principal">
+    <button class="menu-toggle" aria-label="Abrir Menu" aria-controls="main-menu" aria-expanded="false">&#9776;</button>
+    <ul id="main-menu">
+      <li><a href="#origem">Origem</a></li>
+      <li><a href="#expansao">Expansão</a></li>
+      <li><a href="#web">A Web</a></li>
+      <li><a href="#atualidade">Atualidade</a></li>
+      <li><a href="#curiosidades">Curiosidades</a></li>
+    </ul>
+    <button class="dark-toggle" aria-label="Alternar modo escuro" title="Modo escuro/claro">🌙</button>
+  </nav>
+
+  <!-- Layout principal: aside e section -->
+  <main>
+    <!-- Barra lateral semântica -->
+    <aside>
+      <h2>Sobre o autor</h2>
+      <figure>
+        <div class="fakeimg" style="height:140px;">Foto</div>
+        <figcaption>Guilherme Borges</figcaption>
+      </figure>
+      <p>Sou apaixonado por tecnologia e comunicação digital. Este site apresenta um resumo da evolução da Internet, com foco em fatos históricos, marcos e curiosidades.</p>
+      <hr>
+      <h3>Links úteis</h3>
+      <ul>
+        <li><a href="https://pt.wikipedia.org/wiki/Internet" target="_blank" rel="noopener">Wikipedia: Internet</a></li>
+        <li><a href="https://www.cern.ch" target="_blank" rel="noopener">CERN</a></li>
+        <li><a href="https://www.w3.org/" target="_blank" rel="noopener">W3C</a></li>
+      </ul>
+      <hr>
+      <h3>Mais sobre o tema</h3>
+      <ul>
+        <li><a href="#web">O que é a World Wide Web?</a></li>
+        <li><a href="#curiosidades">Curiosidades da Internet</a></li>
+      </ul>
+    </aside>
+
+    <!-- Conteúdo principal -->
+    <section>
+      <article id="origem">
+        <h2>Origem da Internet</h2>
+        <div class="fakeimg">Arpanet (1969)</div>
+        <p>
+          A Internet tem suas raízes na década de 1960, quando o Departamento de Defesa dos EUA criou a ARPANET (Advanced Research Projects Agency Network), um projeto de rede de computadores voltado à comunicação entre universidades e centros de pesquisa. Em 1969, a primeira mensagem foi enviada entre a UCLA e o Stanford Research Institute, marcando o início de uma revolução tecnológica.
+        </p>
+        <p>
+          O objetivo inicial era garantir comunicação resiliente mesmo em caso de falhas na infraestrutura física, o que era fundamental em tempos de Guerra Fria. O protocolo TCP/IP, criado na década de 1970 por Vint Cerf e Bob Kahn, tornou-se o padrão de comunicação, permitindo a expansão da rede para além dos EUA.
+        </p>
+      </article>
+
+      <article id="expansao">
+        <h2>Expansão mundial</h2>
+        <div class="fakeimg">Expansão Global</div>
+        <p>
+          Nos anos 1980, universidades e empresas de outros países começaram a adotar a tecnologia, e a Internet passou a conectar continentes. Em 1983, o sistema de nomes de domínio (DNS) foi criado, facilitando o acesso a sites por nomes ao invés de números IP.
+        </p>
+        <p>
+          Em 1989, Tim Berners-Lee, cientista do CERN, propôs a World Wide Web, revolucionando o acesso à informação ao criar o conceito de páginas interligadas por hiperlinks.
+        </p>
+      </article>
+
+      <article id="web">
+        <h2>A World Wide Web</h2>
+        <div class="fakeimg">WWW (1991)</div>
+        <p>
+          A Web foi lançada publicamente em 1991, permitindo que qualquer pessoa com acesso à Internet pudesse criar e navegar por páginas. Isso popularizou rapidamente o uso da rede, impulsionando o desenvolvimento de navegadores, motores de busca e comércio eletrônico.
+        </p>
+        <p>
+          O HTML (HyperText Markup Language) e o HTTP (HyperText Transfer Protocol) tornaram-se os padrões para a construção e navegação web. O primeiro site ainda está disponível no CERN: <a href="http://info.cern.ch/" target="_blank" rel="noopener">info.cern.ch</a>.
+        </p>
+      </article>
+
+      <article id="atualidade">
+        <h2>Internet na atualidade</h2>
+        <div class="fakeimg">Era Digital</div>
+        <p>
+          Hoje, a Internet conecta bilhões de pessoas e dispositivos em todo o mundo, sendo fundamental para comunicação, trabalho, lazer e educação. Redes sociais, streaming, computação em nuvem e dispositivos IoT (Internet das Coisas) são parte do cotidiano.
+        </p>
+        <p>
+          Segundo a União Internacional de Telecomunicações (2024), mais de 5,4 bilhões de pessoas têm acesso à Internet. A cada segundo, milhares de novos dados são gerados e trocados, demonstrando o papel essencial da rede na sociedade moderna.
+        </p>
+      </article>
+
+      <article id="curiosidades">
+        <h2>Curiosidades</h2>
+        <ul>
+          <li>O termo "Internet" vem da junção de "interconnected networks".</li>
+          <li>A primeira webcam foi criada na Universidade de Cambridge para monitorar uma cafeteira.</li>
+          <li>O símbolo "@" se popularizou no e-mail graças a Ray Tomlinson, em 1971.</li>
+          <li>Existem mais de 1,9 bilhão de sites ativos (2024).</li>
+        </ul>
+      </article>
+    </section>
+  </main>
+
+  <!-- Rodapé semântico -->
+  <footer>
+    <small>2025 Guilherme Borges. Conteúdo parcialmente adaptado da Wikipedia.</small>
+  </footer>
+
+  <script>
+    // Modo escuro: alterna tema e salva preferência no localStorage
+    const toggleButton = document.querySelector('.dark-toggle');
+    const body = document.body;
+    const dark = 'dark-mode';
+
+    if (localStorage.getItem('theme') === 'dark') {
+      body.classList.add(dark);
+      toggleButton.textContent = '☀️';
+    }
+
+    toggleButton.addEventListener('click', () => {
+      body.classList.toggle(dark);
+      if(body.classList.contains(dark)) {
+        localStorage.setItem('theme', 'dark');
+        toggleButton.textContent = '☀️';
+      } else {
+        localStorage.setItem('theme', 'light');
+        toggleButton.textContent = '🌙';
+      }
+    });
+
+    // Menu sanduíche responsivo
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navUl = document.getElementById('main-menu');
+    menuToggle.addEventListener('click', () => {
+      navUl.classList.toggle('open');
+      menuToggle.setAttribute('aria-expanded', navUl.classList.contains('open'));
+    });
+    // Expande o menu ao passar o mouse (opcional)
+    menuToggle.addEventListener('mouseenter', () => {
+      if(window.innerWidth <= 700) navUl.classList.add('open');
+    });
+    menuToggle.addEventListener('mouseleave', () => {
+      if(window.innerWidth <= 700 && !menuToggle.matches(':active')) navUl.classList.remove('open');
+    });
+    // Fecha menu ao clicar em um link (mobile UX)
+    navUl.querySelectorAll('a').forEach(link => 
+      link.addEventListener('click', () => {
+        if(window.innerWidth <= 700) navUl.classList.remove('open');
+      })
+    );
+
+  </script>
+</body>
+</html>
